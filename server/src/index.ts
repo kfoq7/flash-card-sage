@@ -1,9 +1,12 @@
+import { config } from 'dotenv'
+config({ path: `${__dirname}/.env` })
+
 import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
 
 import Deck from './models/Deck'
 
-const PORT = 5000
+const PORT = process.env.PORT ?? 5000
 
 const app = express()
 
@@ -17,11 +20,7 @@ app.post('/decks', async (req: Request, res: Response) => {
   res.json(createdDeck)
 })
 
-mongoose
-  .connect(
-    'mongodb+srv://kfoq7:sXAnHNbYuVyQqGGM@cluster0.petxl.mongodb.net/?retryWrites=true&w=majority'
-  )
-  .then(() => {
-    console.log(`listening on port ${PORT}`)
-    app.listen(PORT)
-  })
+mongoose.connect(process.env.MONGO_URL!).then(() => {
+  console.log(`listening on port ${PORT}`)
+  app.listen(PORT)
+})
