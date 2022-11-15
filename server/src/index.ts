@@ -3,6 +3,7 @@ config({ path: `${__dirname}/.env` })
 
 import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 
 import Deck from './models/Deck'
 
@@ -10,7 +11,17 @@ const PORT = process.env.PORT ?? 5000
 
 const app = express()
 
+app.use(
+  cors({
+    origin: '*'
+  })
+)
 app.use(express.json())
+
+app.get('/decks', async (_req: Request, res: Response) => {
+  const decks = await Deck.find()
+  res.json(decks)
+})
 
 app.post('/decks', async (req: Request, res: Response) => {
   const newDeck = new Deck({
