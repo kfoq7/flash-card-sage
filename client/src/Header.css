@@ -1,0 +1,15 @@
+.Header {
+  height: 50px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Header .container {
+  width: 800px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  align-items: center;
+}
